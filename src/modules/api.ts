@@ -42,9 +42,4 @@ function createPost(Com: Com): Promise<void> {
   }
   
 
-  createPost({ title: 'titleText', messageText: `msgText` })
-    .then(() => {
-      console.log("Post sent!")
-    })
-
 export { getComments, Com, createPost }

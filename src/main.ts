@@ -1,5 +1,5 @@
 import { displayForm } from "./modules/displayForum.ts";
-import { getComments, Com } from "./modules/api.ts"
+import { getComments, Com, createPost } from "./modules/api.ts"
 
 const sendBtn = document.getElementById("sendBtn") as HTMLButtonElement;
 
@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () =>{
 
 sendBtn.addEventListener("submit", (event) => {
 event.preventDefault();
+
+createPost({ title: 'titleText', messageText: `msgText` })
+.then(() => {
+  console.log("Post sent!")
+})
 
 getComments();
 
