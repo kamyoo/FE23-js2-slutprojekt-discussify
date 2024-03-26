@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #F6EEE9;
+}
+header{
+    
+    padding-bottom: 20px;
+    padding-top: 20px;
+    position: relative;
+}
+h1{
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+    font-size: 40px;
+}
+.buttonContainer{
+    display: flex;
+    justify-content: space-between;
+    
+}
+button{
+    font-size: 20px;
+    padding: 10px 20px;
+}
+#myPage{
+    background-color: #C9E4DE;
+}
+#members{
+    background-color: #C6DEF1;
+}
+#forum1{
+    background-color: #DBCDF0;
+}
+#forum2{
+    background-color: #F2C6DE;
+}
+#forum3{
+    background-color: #F7D9C4;
+}
