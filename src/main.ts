@@ -1,6 +1,7 @@
 import { displayForm } from "./modules/displayForum.ts";
 import { getComments, Com, createPost } from "./modules/api.ts"
 
+
 const sendBtn = document.getElementById("sendBtn") as HTMLButtonElement;
 
 document.addEventListener('DOMContentLoaded', () =>{
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     document.getElementById('forum3')?.addEventListener('click', () => displayForm('forum3'));
 });
 
-sendBtn.addEventListener("submit", (event) => {
+sendBtn.addEventListener("click", (event) => {
 event.preventDefault();
 
 createPost({ title: 'titleText', messageText: `msgText` })
