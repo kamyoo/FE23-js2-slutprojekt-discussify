@@ -4,6 +4,9 @@ type Com = {
     messageText: string
 }
 
+const titleText = (document.getElementById("title") as HTMLInputElement).value ;
+const msgText = (document.getElementById("messageText") as HTMLInputElement).value ;
+
 async function getComments(): Promise<Com[]>{
     const url = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/forum1.json';
 
@@ -19,10 +22,7 @@ async function getComments(): Promise<Com[]>{
 
 async function createPost(Com: Com): Promise<void> {
 
-    // const titleText = document.getElementById("title").value as HTMLInputElement;
-    // const msgText = document.getElementById("messageText").value as HTMLInputElement;
-
-    // console.log(titleText, msgText);
+    console.log(titleText, msgText);
 
     const headers: Headers = new Headers()
     headers.set('Content-Type', 'application/json')
