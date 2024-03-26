@@ -12,31 +12,14 @@ export function displayForm(forumId: string){
         <input type="text" id="title" name="title" required><br>
         <label for="message">Message:</label><br>
         <textarea id="message" name="message" required></textarea><br>
-        <input type="submit" value="Send">
+        <input type="submit" value="Send" id="sendMsgBtn">
     </form>`;
 
-    
     formContainer?.insertAdjacentHTML('beforeend', forumForm);
 }
 
 function displayComments(comments: Com[]): void{
     const container = document.querySelector('#formContainer') as HTMLDivElement;
-
-    comments.forEach( comment =>{
-        createCommentCard(comment, container);
-    })
 }
-function createCommentCard({title, body, user}: Com, container: HTMLDivElement): void{
-    const card = document.createElement('div');
-    const titleEl = document.createElement('h2');
-    const bodyEl = document.createElement('p');
-    const userEl = document.createElement('p');
 
-    titleEl.innerText = title;
-    bodyEl.innerText = body;
-    userEl.innerText = user;
-
-    card.append(titleEl, bodyEl, userEl);
-    container.append(card);
-}
 getComments().then( displayComments )
