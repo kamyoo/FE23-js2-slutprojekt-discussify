@@ -1,3 +1,5 @@
+const title: HTMLInputElement = document.getElementById('title') as HTMLInputElement;
+const messageText: HTMLInputElement = document.getElementById('messageText') as HTMLInputElement;
 
 type Com = {
     title: string,
@@ -18,6 +20,11 @@ async function getComments(): Promise<Com[]>{
 
 
 async function createPost(Com: Com): Promise<void> {
+
+  const newTask: {title: string; messageText: string;} = {
+    title: title.value,
+    messageText: messageText.value,
+  }
 
     // const titleText = document.getElementById("title").value;
     // const msgText = document.getElementById("messageText").value;
