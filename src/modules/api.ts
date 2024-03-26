@@ -19,8 +19,10 @@ async function getComments(): Promise<Com[]>{
 
 async function createPost(Com: Com): Promise<void> {
 
-    // const titleText = document.getElementById("title").value;
-    // const msgText = document.getElementById("messageText").value;
+    // const titleText = document.getElementById("title").value as HTMLInputElement;
+    // const msgText = document.getElementById("messageText").value as HTMLInputElement;
+
+    // console.log(titleText, msgText);
 
     const headers: Headers = new Headers()
     headers.set('Content-Type', 'application/json')
