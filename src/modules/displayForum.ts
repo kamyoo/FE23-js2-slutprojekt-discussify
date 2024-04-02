@@ -1,30 +1,37 @@
-import { postComments, Com, getComments } from "./fetchdata";  
+import { postComments, Com, getComments } from "./fetchdata";
 
-export async function displayForm(forumId: string){
-    const forum1Container = document.getElementById('forum1Container');
-    if (!forum1Container) return;
+let createdForm: string | null = null;
 
-    const comments = await getComments();
-    if(comments.length > 0){
-        comments.forEach(comment => displayComments(comment, forum1Container));
-    }
+export async function displayForm(forumId: string) {
+    const forumContainer = document.getElementById(`${forumId}Container`);
+    if (!forumContainer) return;
+
+    if (createdForm === forumId) return;
+
+    forumContainer.innerHTML = '';
+
+    const comments = await getComments(forumId);
 
     const forumForm = `
-    <form id="${forumId}Form">
-        <label for="title">Titel:</label><br>
-        <input type="text" id="title" name="title" required><br>
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message" required></textarea><br>
-        <input type="submit" value="Send" id="sendMsgBtn">
-    </form>`;
+        <form id="${forumId}Form">
+            <label for="title">Titel:</label><br>
+            <input type="text" id="title" name="title" required><br>
+            <label for="message">Meddelande:</label><br>
+            <textarea id="message" name="message" required></textarea><br>
+            <input type="submit" value="Skicka" id="sendMsgBtn">
+        </form>`;
 
-    forum1Container.innerHTML = forumForm;
+    forumContainer.insertAdjacentHTML('beforebegin', forumForm);
 
-    // forum1Container?.insertAdjacentHTML('beforeend', forumForm);
+    createdForm = forumId;
 
-    const form = document.getElementById(`${forumId}Form`) as HTMLElement;
+    if (comments.length > 0) {
+        comments.forEach(comment => displayComments(comment, forumContainer));
+    }
 
-    form?.addEventListener('submit', async(event) =>{
+    const form = document.getElementById(`${forumId}Form`);
+
+    form?.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const titleInput = form.querySelector('input[name="title"]') as HTMLInputElement;
@@ -32,21 +39,43 @@ export async function displayForm(forumId: string){
         const title = titleInput.value;
         const message = messageInput.value;
 
-        const newComment: Com ={
+        const newComment: Com = {
             title: title,
             message: message
         };
 
-        await postComments(newComment);
+        await postComments(newComment, forumId);
 
         titleInput.value = '';
-        messageInput.value ='';
+        messageInput.value = '';
 
-        displayComments(newComment, forum1Container);
+        displayComments(newComment, forumContainer);
     });
 }
 
-function displayComments(comment:Com, container: HTMLElement){
+export async function loadComments(forumId: string) {
+    const comments = await getComments(forumId);
+    const container = document.getElementById(`${forumId}Container`);
+    if (container) {
+
+        const otherForumIds = ['forum1', 'forum2', 'forum3'].filter(id => id !== forumId);
+        otherForumIds.forEach(id => {
+            const otherContainer = document.getElementById(`${id}Container`);
+            if (otherContainer) {
+                otherContainer.innerHTML = '';
+            }
+        });
+
+        container.innerHTML = '';
+        comments.forEach(comment => displayComments(comment, container));
+    }
+}
+
+export function isFormCreated(forumId: string): boolean {
+    return createdForm === forumId;
+}
+
+function displayComments(comment: Com, container: HTMLElement) {
     const commentDiv = document.createElement('div');
     commentDiv.classList.add('comment-wrapper');
 
@@ -58,5 +87,5 @@ function displayComments(comment:Com, container: HTMLElement){
 
     commentDiv.appendChild(titleEl);
     commentDiv.appendChild(messageEl);
-    container.appendChild(commentDiv);
+    container.prepend(commentDiv);
 }
