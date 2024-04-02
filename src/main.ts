@@ -1,9 +1,18 @@
-import { displayForm } from "./modules/displayForum.ts";
-import { getComments, Com, postComments } from "./modules/fetchdata.ts";
+import { displayForm, loadComments, isFormCreated } from "./modules/displayForum";
 
-document.addEventListener('DOMContentLoaded', async() =>{
-    document.getElementById('forum1')?.addEventListener('click', () => displayForm('forum1'));
-    document.getElementById('forum2')?.addEventListener('click', () => displayForm('forum2'));
-    document.getElementById('forum3')?.addEventListener('click', () => displayForm('forum3'));
+document.addEventListener('DOMContentLoaded', async () => {
+    const forumIds = ['forum1', 'forum2', 'forum3'];
+
+    for (const forumId of forumIds) {
+        const forumButton = document.getElementById(forumId);
+        if (forumButton) {
+            forumButton.addEventListener('click', async () => {
+                if (!isFormCreated(forumId)) {
+                    await displayForm(forumId);
+                }
+                await loadComments(forumId);
+            });
+        }
+    }
 });
 
