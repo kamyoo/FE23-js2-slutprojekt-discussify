@@ -1,0 +1,13 @@
+#createUserPopup {
+display: none;
+}
+
+#loginBtn {
+    display: flex;
+    justify-content: space-between;
+    background-color: brown;
+    color: beige;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}

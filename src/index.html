@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./main.ts" type="module"></script>
-    <!-- <script src="./main.js" type="module"></script> -->
     <link href="./css/style.css" rel="stylesheet">
     <link href="./css/login.css" rel="stylesheet">
 </head>
 <body>
     <div id="bodyContainer">
+      <button id="loginBtn">Sign in/up</button>
         <header>
             <h1>Welcome to Discussify</h1>
         </header>
@@ -26,6 +26,7 @@
 
               <div id="createUserPopup">
                 <form>
+                  <input type="text" placeholder="Name" id="cr8Name">
                   <input type="text" placeholder="E-mail" id="cr8Email">
                   <input type="password" placeholder="Password" id="cr8Psw">
                   <input type="submit" value="Sign up" id="cr8UsrBtn">

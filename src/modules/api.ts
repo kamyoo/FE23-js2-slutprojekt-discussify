@@ -23,26 +23,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-const auth = getAuth();
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
+// const auth = getAuth();
+// createUserWithEmailAndPassword(auth, email, password)
+//   .then((userCredential) => {
 
-    const user = userCredential.user;
+//     const user = userCredential.user;
 
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
+//   })
+//   .catch((error) => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
 
-  });
-
-  async function cr8Newuser() {
-    const url = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/users.json';
-
-    const res = await fetch(url);
-    const comments = await res.json();
-
-    console.log(comments);
-}
-
-  
+//   });
