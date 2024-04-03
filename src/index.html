@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./main.ts" type="module"></script>
+    <!-- <script src="./main.js" type="module"></script> -->
     <link href="./css/style.css" rel="stylesheet">
+    <link href="./css/login.css" rel="stylesheet">
 </head>
 <body>
     <div id="bodyContainer">
@@ -14,6 +16,22 @@
         </header>
 
         <main>
+            <!-- <div id="loginPopup">
+                <form>
+                  <input type="text" placeholder="Username">
+                  <input type="password" placeholder="Password">
+                  <input type="submit" value="Log In">
+                </form>
+              </div> -->
+
+              <div id="createUserPopup">
+                <form>
+                  <input type="text" placeholder="E-mail" id="cr8Email">
+                  <input type="password" placeholder="Password" id="cr8Psw">
+                  <input type="submit" value="Sign up" id="cr8UsrBtn">
+                </form>
+              </div>
+
             <div class="buttonContainer">
                 <button id="myPage">My page</button>
                 <button id="members">Members</button>

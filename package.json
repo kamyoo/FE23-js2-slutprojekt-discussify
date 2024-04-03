@@ -12,6 +12,10 @@
   "license": "ISC",
   "devDependencies": {
     "del-cli": "^5.1.0",
-    "parcel": "^2.12.0"
+    "parcel": "^2.12.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "firebase": "^10.10.0"
   }
 }
