@@ -85,7 +85,11 @@ function displayComments(comment: Com, container: HTMLElement, forumId: string) 
     const messageEl = document.createElement('p');
     messageEl.textContent = comment.message;
 
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent ='X'
+
     commentDiv.appendChild(titleEl);
     commentDiv.appendChild(messageEl);
+    commentDiv.appendChild(deleteBtn);
     container.prepend(commentDiv);
 }
