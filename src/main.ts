@@ -1,5 +1,14 @@
 import { displayForm, loadComments, isFormCreated } from "./modules/displayForum.ts";
-import { Newuser, createUser, loginUser } from "./modules/login.ts"
+import { Newuser, createUser, loginUser } from "./modules/login.ts";
+import { profileSite } from './modules/profile.ts';
+
+
+//exempel
+const members = document.getElementById('members') as HTMLButtonElement;
+
+members.addEventListener('click', profileSite);
+
+//
 
   document.addEventListener('DOMContentLoaded', async () => {
   let activeForumId: string | null = null;
