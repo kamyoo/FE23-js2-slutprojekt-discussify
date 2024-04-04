@@ -1,5 +1,8 @@
 import { displayForm, loadComments, isFormCreated } from "./modules/displayForum";
 import { Newuser, createUser, loginUser } from "./modules/login.ts";
+import { profileSite } from "./modules/profile.ts";
+
+const myPage = document.getElementById('myPage') as HTMLButtonElement;
 
 document.addEventListener('DOMContentLoaded', async () => {
     let activeForumId: string | null = null;
@@ -91,6 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             try {
                 await loginUser(email, password);
+                myPage.addEventListener('click', profileSite);
               } 
               catch (error) {
                console.log("Login failed!")
