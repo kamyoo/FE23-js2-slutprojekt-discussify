@@ -47,13 +47,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   });
 
-        const loginBtn = (document.getElementById("loginBtn") as HTMLInputElement);
+        const loginBtn = (document.getElementById("loginBtn") as HTMLButtonElement);
         loginBtn.addEventListener("click", (event) => {
 
             const loginWrap = (document.querySelector("#createUserPopup") as HTMLDivElement);
-            if (loginBtn != null) {
+            
             loginWrap.style.display = "flex";
-        }
+        
         })
 
         const loginLink = document.getElementById("loginLink") as HTMLAnchorElement;
@@ -84,13 +84,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         const signInBtn = (document.getElementById("signInBtn") as HTMLInputElement);
         signInBtn.addEventListener("click", async (event) => {
             event.preventDefault();
+
             const email = (document.getElementById("loginEmail") as HTMLInputElement).value;
             const password = (document.getElementById("loginPassword") as HTMLInputElement).value;
 
             try {
                 await loginUser(email, password);
-              } catch (error) {
+              } 
+              catch (error) {
                console.log("Login failed!")
               }
-
         })
+
+        

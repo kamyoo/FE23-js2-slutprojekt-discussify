@@ -28,17 +28,31 @@ type Newuser = {
   }
   
   async function loginUser(userEmail: string, userPassword: string): Promise<void> {
+    const usersUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/users.json';
+    
     try {
-      const auth = getAuth(app);
-      await signInWithEmailAndPassword(auth, userEmail, userPassword);
-      console.log("User logged in successfully");
-      // You can redirect to the dashboard or perform other actions after successful login
-    } catch (error) {
-      console.error("Login failed:", error);
-      throw error;
-    }
-  }
+      const response = await fetch(usersUrl);
+      const usersData: { [userId: string]: Newuser } = await response.json();
 
+      let loggedIn = false;
+
+      for (const userId in usersData) {
+          const user = usersData[userId];
+          if (user.userEmail === userEmail && user.userPassword === userPassword) {
+              console.log('User logged in successfully');
+              return;
+              loggedIn = true;
+              hidePopupScreen();
+              showUser();
+          }
+      }
+      if (!loggedIn) {
+      console.log('Invalid email or password');
+      }
+  } catch (error) {
+      console.error('Error fetching users data:', error);
+  }
+}
   
   async function createUser(Newuser: Newuser): Promise<void> {
     const createUserUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/users.json';
@@ -59,6 +73,22 @@ type Newuser = {
       });
   }
   
+  function hidePopupScreen() {
+    const signinupBtn = (document.getElementById("#signInBtn") as HTMLInputElement);
+    const popupScreen = (document.getElementById("#loginPopup") as HTMLDivElement) ;
+    if (popupScreen) {
+        popupScreen.style.display = "none";
+    }
+    if (signinupBtn) {
+      signinupBtn.style.display = "none";
+    }
+}
 
+  function showUser() {
+    const profilePicContainer = (document.getElementById("#profilePicContainer") as HTMLDivElement);
+    if (profilePicContainer) {
+      profilePicContainer.style.display = "flex";
+    }
+  }
   export { Newuser, createUser, loginUser };
   

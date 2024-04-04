@@ -87,3 +87,17 @@
     max-width: 20px;
     max-height: 20px;
   }
+
+  #profilePicContainer {
+    display: none;
+    justify-content: space-between;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+
+  #profilePic {
+    max-width: 100px;
+    display: flex;
+    position: absolute;
+  }
