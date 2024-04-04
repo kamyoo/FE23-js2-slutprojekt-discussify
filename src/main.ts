@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
     }
+
+});
+
 });
 
       const cr8UsrBtn = (document.getElementById('cr8UsrBtn') as HTMLInputElement); 
@@ -97,3 +100,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
 
         
+

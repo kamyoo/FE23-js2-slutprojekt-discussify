@@ -13,12 +13,12 @@ export async function displayForm(forumId: string) {
     const comments = await getComments(forumId);
 
     const forumForm = `
-        <form id="${forumId}Form">
-            <label for="title">Titel:</label><br>
+        <form id="${forumId}Form" class="forum-form">
+            <label for="title">Title:</label><br>
             <input type="text" id="title" name="title" required><br>
-            <label for="message">Meddelande:</label><br>
+            <label for="message">Message:</label><br>
             <textarea id="message" name="message" required></textarea><br>
-            <input type="submit" value="Skicka" id="sendMsgBtn">
+            <input type="submit" value="Send" id="sendMsgBtn">
         </form>`;
 
     forumContainer.insertAdjacentHTML('beforebegin', forumForm);
@@ -26,7 +26,7 @@ export async function displayForm(forumId: string) {
     createdForm = forumId;
 
     if (comments.length > 0) {
-        comments.forEach(comment => displayComments(comment, forumContainer));
+        comments.forEach(comment => displayComments(comment, forumContainer, forumId));
     }
 
     const form = document.getElementById(`${forumId}Form`);
@@ -49,7 +49,7 @@ export async function displayForm(forumId: string) {
         titleInput.value = '';
         messageInput.value = '';
 
-        displayComments(newComment, forumContainer);
+        displayComments(newComment, forumContainer, forumId);
     });
 }
 
@@ -67,7 +67,7 @@ export async function loadComments(forumId: string) {
         });
 
         container.innerHTML = '';
-        comments.forEach(comment => displayComments(comment, container));
+        comments.forEach(comment => displayComments(comment, container, forumId));
     }
 }
 
@@ -75,9 +75,9 @@ export function isFormCreated(forumId: string): boolean {
     return createdForm === forumId;
 }
 
-function displayComments(comment: Com, container: HTMLElement) {
+function displayComments(comment: Com, container: HTMLElement, forumId: string) {
     const commentDiv = document.createElement('div');
-    commentDiv.classList.add('comment-wrapper');
+    commentDiv.classList.add('comment-wrapper', `forum-${forumId}-comments`);
 
     const titleEl = document.createElement('h2');
     titleEl.textContent = comment.title;
@@ -85,7 +85,11 @@ function displayComments(comment: Com, container: HTMLElement) {
     const messageEl = document.createElement('p');
     messageEl.textContent = comment.message;
 
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent ='X'
+
     commentDiv.appendChild(titleEl);
     commentDiv.appendChild(messageEl);
+    commentDiv.appendChild(deleteBtn);
     container.prepend(commentDiv);
 }

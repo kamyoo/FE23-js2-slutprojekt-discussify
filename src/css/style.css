@@ -21,12 +21,12 @@ h1{
     justify-content: space-between;
     
 }
-button{
+.page-btn{
     font-size: 20px;
     padding: 10px 20px;
 }
 #myPage{
-    background-color: #C9E4DE;
+    background-color: #F7D9C4;
 }
 #members{
     background-color: #C6DEF1;
@@ -38,32 +38,77 @@ button{
     background-color: #F2C6DE;
 }
 #forum3{
-    background-color: #F7D9C4;
+    background-color: #C9E4DE;
 }
-#formContainer{
+.forum-form {
     align-items: center;
     justify-content: center;
     margin: 20px auto;
     width: 80%;
 }
-
-#formContainer input[type='text']{
+.forum-form input[type='text'] {
     width: 50%;
     border-radius: 5px;
     margin-bottom: 10px;
 }
-#formContainer textarea{
+.forum-form textarea {
     width: 100%;
     border-radius: 5px;
     height: 3rem;
     margin-bottom: 10px;
 }
-#formContainer label{
+.forum-form label {
     font-size: 20px;
 }
-#formContainer input[type='submit']{
+.forum-form input[type='submit'] {
     padding: 10px;
     border-radius: 5px;
     font-size: 15px;
+}
+
+.comment-wrapper {
+    border: 1px solid black;
+    padding: 10px;
+    margin: auto;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+}
+.comment-wrapper button{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 2px;
+}
+
+.comment-wrapper h2 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.comment-wrapper p {
+    font-size: 16px;
+}
+.forum-forum1-comments,
+.forum-forum1-comments h2,
+.forum-forum1-comments p{
+    background-color: #DBCDF0;
+}
+
+.forum-forum2-comments,
+.forum-forum2-comments h2,
+.forum-forum2-comments p {
+    background-color: #F2C6DE;
+}
+
+.forum-forum3-comments,
+.forum-forum3-comments h2,
+.forum-forum3-comments p {
+    background-color: #C9E4DE;
 }
 
