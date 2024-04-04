@@ -32,8 +32,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 });
 
-});
-
       const cr8UsrBtn = (document.getElementById('cr8UsrBtn') as HTMLInputElement); 
 
       cr8UsrBtn.addEventListener("click", (event) => {
@@ -98,6 +96,3 @@ document.addEventListener('DOMContentLoaded', async () => {
                console.log("Login failed!")
               }
         })
-
-        
-
