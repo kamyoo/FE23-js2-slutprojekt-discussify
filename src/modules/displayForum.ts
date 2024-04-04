@@ -93,3 +93,24 @@ function displayComments(comment: Com, container: HTMLElement, forumId: string) 
     commentDiv.appendChild(deleteBtn);
     container.prepend(commentDiv);
 }
+
+
+//för att tömma forum vid profilsida
+function clearAllForums() {
+    ['forum1', 'forum2', 'forum3'].forEach(forumId => {
+        const container = document.getElementById(`${forumId}Container`);
+        if (container) {
+            container.innerHTML = '';
+        }
+    });
+}
+
+const myPage = document.getElementById('myPage') as HTMLButtonElement;
+
+myPage.addEventListener('click', () => {
+    const forumForm = document.querySelector('.forum-form') as HTMLElement;
+    if (forumForm) {
+        forumForm.style.display = 'none';
+        clearAllForums();
+    }
+});

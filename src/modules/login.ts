@@ -1,6 +1,7 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { profileSite } from "./profile.ts";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -40,6 +41,7 @@ type Newuser = {
               loggedIn = true;
               hidePopupScreen();
               showUser();
+              profileSite();
               return;
           }
       }
