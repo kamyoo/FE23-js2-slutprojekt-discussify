@@ -6,6 +6,8 @@
     <title>Document</title>
     <script src="./main.ts" type="module"></script>
     <link href="./css/style.css" rel="stylesheet">
+    <link href="./css/login.css" rel="stylesheet">
+    <link href="./css/profile.css" rel="stylesheet">
 </head>
 <body>
     <div id="bodyContainer">
@@ -14,6 +16,33 @@
         </header>
 
         <main>
+            <div id="loginPopup">
+                <form id="loginPopupForm">
+                  <h2>Sign in</h2>
+                  <img src="./img/close.png" id="closeBtn2">
+                  <input type="text" placeholder="E-mail" id="loginEmail">
+                  <input type="password" placeholder="Password" id="loginPassword">
+                  <input type="submit" value="Log In" id="signInBtn">
+                </form>
+              </div>
+
+              <button id="loginBtn">Sign in/up</button>
+
+              <div id="createUserPopup">
+                <form id="createUserPopupForm">
+                  <h2>Create user</h2>
+                  <img src="./img/close.png" id="closeBtn">
+                  <input type="text" placeholder="Name" id="cr8Name">
+                  <input type="text" placeholder="E-mail" id="cr8Email">
+                  <input type="password" placeholder="Password" id="cr8Psw">
+                  <input type="submit" value="Sign up" id="cr8UsrBtn">
+                  <p>Already a member? Sign in <a href="" id="loginLink">here.</a></p>
+                </form>
+              </div>
+
+              <div id="profilePicContainer">
+                <img src="./img/punk.jpg" id="profilePic">
+              </div>
             <div class="buttonContainer">
                 <button id="myPage" class="page-btn">My page</button>
                 <button id="members" class="page-btn">Members</button>
@@ -25,6 +54,23 @@
             <div id="forum1Container"></div>
             <div id="forum2Container"></div>
             <div id="forum3Container"></div>
+
+
+            <!--profilsida-->
+            <section id="proSite">
+              <p id="profilText"></p>
+              <div id="foto">
+                  <img src="OIP.jpeg" alt="Bild förhandsvisning" id="imagePreview">
+              </div>
+              <input type="file" name="fileInput" id="fileInput">
+              <input type="button" id="changeImg" value="Ändra profilbild">
+              <input type="button" value="Ändra profiltext" id="changeProfileText">
+              <form id="ptext">
+                  <textarea name="writeProfilText" id="writeProfilText" cols="30" rows="10" maxlength="600"></textarea>
+                  <input type="submit" value="färdig">
+              </form>
+              <div id="postsContainer"></div>
+            </section>
         </main>
 
 
