@@ -89,7 +89,7 @@
   }
 
   #profilePicContainer {
-    display: none;
+    display: flex;
     justify-content: space-between;
     position: absolute;
     top: 5px;

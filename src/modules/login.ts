@@ -1,10 +1,6 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -27,6 +23,7 @@ type Newuser = {
     userPassword: string
   }
   
+
   async function loginUser(userEmail: string, userPassword: string): Promise<void> {
     const usersUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/users.json';
     
@@ -40,10 +37,10 @@ type Newuser = {
           const user = usersData[userId];
           if (user.userEmail === userEmail && user.userPassword === userPassword) {
               console.log('User logged in successfully');
-              return;
               loggedIn = true;
               hidePopupScreen();
               showUser();
+              return;
           }
       }
       if (!loggedIn) {
@@ -54,6 +51,24 @@ type Newuser = {
   }
 }
   
+function hidePopupScreen() {
+  const signinupBtn = (document.getElementById("signInBtn") as HTMLButtonElement);
+  const popupScreen = (document.getElementById("loginPopup") as HTMLDivElement) ;
+  if (popupScreen) {
+      popupScreen.style.display = "none";
+  }
+  if (signinupBtn) {
+    signinupBtn.style.display = "none";
+  }
+}
+
+function showUser() {
+  const profilePicContainer = (document.getElementById("profilePicContainer") as HTMLDivElement);
+  
+    profilePicContainer.style.display = "flex";
+  
+}
+
   async function createUser(Newuser: Newuser): Promise<void> {
     const createUserUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/users.json';
   
@@ -73,22 +88,5 @@ type Newuser = {
       });
   }
   
-  function hidePopupScreen() {
-    const signinupBtn = (document.getElementById("#signInBtn") as HTMLInputElement);
-    const popupScreen = (document.getElementById("#loginPopup") as HTMLDivElement) ;
-    if (popupScreen) {
-        popupScreen.style.display = "none";
-    }
-    if (signinupBtn) {
-      signinupBtn.style.display = "none";
-    }
-}
-
-  function showUser() {
-    const profilePicContainer = (document.getElementById("#profilePicContainer") as HTMLDivElement);
-    if (profilePicContainer) {
-      profilePicContainer.style.display = "flex";
-    }
-  }
   export { Newuser, createUser, loginUser };
   
