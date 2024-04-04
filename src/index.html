@@ -11,26 +11,32 @@
 </head>
 <body>
     <div id="bodyContainer">
-      <button id="loginBtn">Sign in/up</button>
         <header>
             <h1>Welcome to Discussify</h1>
         </header>
 
         <main>
-            <!-- <div id="loginPopup">
-                <form>
-                  <input type="text" placeholder="Username">
-                  <input type="password" placeholder="Password">
-                  <input type="submit" value="Log In">
+            <div id="loginPopup">
+                <form id="loginPopupForm">
+                  <h2>Sign in</h2>
+                  <img src="./img/close.png" id="closeBtn2">
+                  <input type="text" placeholder="E-mail" id="loginEmail">
+                  <input type="password" placeholder="Password" id="loginPassword">
+                  <input type="submit" value="Log In" id="signInBtn">
                 </form>
-              </div> -->
+              </div>
+
+              <button id="loginBtn">Sign in/up</button>
 
               <div id="createUserPopup">
-                <form>
+                <form id="createUserPopupForm">
+                  <h2>Create user</h2>
+                  <img src="./img/close.png" id="closeBtn">
                   <input type="text" placeholder="Name" id="cr8Name">
                   <input type="text" placeholder="E-mail" id="cr8Email">
                   <input type="password" placeholder="Password" id="cr8Psw">
                   <input type="submit" value="Sign up" id="cr8UsrBtn">
+                  <p>Already a member? Sign in <a href="" id="loginLink">here.</a></p>
                 </form>
               </div>
 

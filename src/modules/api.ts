@@ -23,7 +23,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-// const auth = getAuth();
+const auth = getAuth();
 // createUserWithEmailAndPassword(auth, email, password)
 //   .then((userCredential) => {
 
@@ -35,3 +35,16 @@ const analytics = getAnalytics(app);
 //     const errorMessage = error.message;
 
 //   });
+
+async function loginUser(email: string, password: string) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log("User logged in:", user);
+    // Redirect to dashboard or perform other actions after login
+  } catch (error) {
+    console.error("Login failed:", error);
+  }
+}
+
+export { loginUser }
