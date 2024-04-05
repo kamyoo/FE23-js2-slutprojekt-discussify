@@ -1,4 +1,5 @@
 import { postComments, Com, getComments, deleteComment } from "./fetchdata";
+import { getLoggedInUser } from "./login";
 
 let createdForm: string | null = null;
 
@@ -78,6 +79,21 @@ export function isFormCreated(forumId: string): boolean {
 function displayComments(comment: Com, container: HTMLElement, forumId: string) {
     const commentDiv = document.createElement('div');
     commentDiv.classList.add('comment-wrapper', `forum-${forumId}-comments`);
+
+    const loggedInUser = getLoggedInUser();
+    if(loggedInUser){
+        const usernameEl = document.createElement('h2');
+        usernameEl.textContent = loggedInUser.userName;
+
+        const profilePicEl = document.createElement('img');
+        const profilePicSrc = localStorage.getItem('chosenProfilePic');
+        if(profilePicSrc){
+            profilePicEl.src = profilePicSrc;
+        }
+
+        commentDiv.appendChild(usernameEl);
+        commentDiv.appendChild(profilePicEl);
+    }
 
     const titleEl = document.createElement('h2');
     titleEl.textContent = comment.title;

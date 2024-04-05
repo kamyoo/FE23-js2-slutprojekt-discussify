@@ -19,11 +19,13 @@ h1{
 .buttonContainer{
     display: flex;
     justify-content: space-between;
-    
+    width: 70%;
+    margin: auto;
 }
 .page-btn{
-    font-size: 20px;
-    padding: 10px 20px;
+    font-size: 24px;
+    padding: 10px 30px;
+    width: auto;
 }
 #myPage{
     background-color: #F7D9C4;
@@ -44,7 +46,7 @@ h1{
     align-items: center;
     justify-content: center;
     margin: 20px auto;
-    width: 80%;
+    width: 70%;
 }
 .forum-form input[type='text'] {
     width: 50%;
@@ -73,7 +75,7 @@ h1{
     margin-bottom: 15px;
     border-radius: 5px;
     background-color: #f9f9f9;
-    width: 80%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
