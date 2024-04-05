@@ -101,3 +101,20 @@
     display: flex;
     position: absolute;
   }
+  
+  .createUserProfilePic {
+    max-width: 100px;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .createUserProfilePic a:hover {
+    border-style: solid;
+    border-color: black;
+  }
+
+  #profilePicWrap {
+    display: flex;
+  }
