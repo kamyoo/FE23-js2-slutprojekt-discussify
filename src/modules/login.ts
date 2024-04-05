@@ -42,6 +42,9 @@ type Newuser = {
               hidePopupScreen();
               showUser();
               profileSite();
+
+              localStorage.setItem('loggedInUser', JSON.stringify(user));
+
               return;
           }
       }
@@ -52,7 +55,17 @@ type Newuser = {
       console.error('Error fetching users data:', error);
   }
 }
-  
+
+// Function to retrieve logged-in user's data from localStorage
+function getLoggedInUser(): Newuser | null {
+  const userJson = localStorage.getItem('loggedInUser');
+  if (userJson) {
+    return JSON.parse(userJson);
+  } else {
+    return null;
+  }
+}
+
 function hidePopupScreen() {
   const signinupBtn = (document.getElementById("signInBtn") as HTMLButtonElement);
   const popupScreen = (document.getElementById("loginPopup") as HTMLDivElement) ;
@@ -64,11 +77,45 @@ function hidePopupScreen() {
   }
 }
 
+
 function showUser() {
-  const profilePicContainer = (document.getElementById("profilePicContainer") as HTMLDivElement);
+  const profilePicContainer = document.getElementById("profilePicContainer") as HTMLDivElement;
+  profilePicContainer.style.display = "flex";
+
+  profilePicContainer.innerHTML = '';
+  const chosenPicId = localStorage.getItem('chosenProfilePic');
   
-    profilePicContainer.style.display = "flex";
+  if (chosenPicId) {
+
+    const chosenPicElement = document.getElementById(chosenPicId);
+    if (chosenPicElement && chosenPicElement instanceof HTMLImageElement) {
+
+      const chosenPic = document.createElement('img');
+      chosenPic.src = chosenPicElement.src; 
+      chosenPic.classList.add('chosen');
+      profilePicContainer.appendChild(chosenPic);
+    } else {
+      console.error('Chosen picture element not found or not an image:', chosenPicId);
+    }
+  } else {
+    console.error('No chosen picture ID found in localStorage.');
+  }
+  const loggedInUser = localStorage.getItem('loggedInUser');
   
+  if (loggedInUser) {
+
+    const userData = JSON.parse(loggedInUser);
+    
+
+    const usernameElement = document.createElement('div');
+    usernameElement.textContent = userData.userName; 
+
+
+    profilePicContainer.appendChild(usernameElement);
+  } else {
+    console.error('No logged-in user found in localStorage.');
+  }
+
 }
 
   async function createUser(Newuser: Newuser): Promise<void> {
@@ -90,5 +137,49 @@ function showUser() {
       });
   }
   
-  export { Newuser, createUser, loginUser };
+  async function checkUserName(userName: string): Promise<void> {
+    const usersUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/users.json';
+    
+    try {
+      const response = await fetch(usersUrl);
+      const usersData: { [userId: string]: Newuser } = await response.json();
+
+      for (const userId in usersData) {
+          const user = usersData[userId];
+          if (user.userName === userName) {
+              return;
+          }
+        }        console.log(usersData);
+        return;
+  } catch (error) {
+      console.error('Error fetching users data:', error);
+      return;
+  }
+}
+  
+document.querySelectorAll('.createUserProfilePic').forEach(pic => {
+  pic.addEventListener('click', () => {
+    
+    document.querySelectorAll('.createUserProfilePic').forEach(pic => {
+      pic.classList.remove('chosen');
+    });
+    
+    pic.classList.add('chosen');
+    
+    localStorage.setItem('chosenProfilePic', pic.id);
+  });
+});
+
+// Function to highlight the chosen profile picture
+function highlightChosenProfilePic() {
+  const chosenPicId = localStorage.getItem('chosenProfilePic');
+  if (chosenPicId) {
+    const chosenPic = document.getElementById(chosenPicId);
+    if (chosenPic) {
+      chosenPic.classList.add('chosen');
+    }
+  }
+}
+
+  export { Newuser, createUser, loginUser, checkUserName, getLoggedInUser, highlightChosenProfilePic };
   

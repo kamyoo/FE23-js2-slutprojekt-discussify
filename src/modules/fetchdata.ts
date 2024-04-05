@@ -1,4 +1,3 @@
-
 type Com = {
   title: string,
   message: string;

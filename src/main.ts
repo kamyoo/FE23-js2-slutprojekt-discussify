@@ -1,7 +1,13 @@
 import { displayForm, loadComments, isFormCreated } from "./modules/displayForum";
-import { Newuser, createUser, loginUser } from "./modules/login.ts";
+import { Newuser, createUser, loginUser, getLoggedInUser, highlightChosenProfilePic } from "./modules/login.ts";
 import { profileSite } from "./modules/profile.ts";
-
+let loggedIn = false;
+const loggedInUser = getLoggedInUser();
+if (loggedInUser) {
+  console.log('Logged-in user:', loggedInUser.userName);
+} else {
+    console.log('No user logged in.');
+}
 const myPage = document.getElementById('myPage') as HTMLButtonElement;
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -42,11 +48,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         const newName = (document.getElementById("cr8Name") as HTMLInputElement).value ;
         const newEmail = (document.getElementById("cr8Email") as HTMLInputElement).value ;
         const newPassword = (document.getElementById("cr8Psw") as HTMLInputElement).value ;
+        const loginWrap = (document.querySelector("#createUserPopup") as HTMLDivElement);
+        const loginPopup = (document.getElementById("loginPopup") as HTMLDivElement);
 
         createUser({ userName: `${newName}`, userEmail: `${newEmail}`, userPassword: `${newPassword}` })
 
         .then(() => {
         console.log("User created!")
+        loginWrap.style.display = "none";
+        loginPopup.style.display = "flex";
         })
   
   });
@@ -91,7 +101,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const email = (document.getElementById("loginEmail") as HTMLInputElement).value;
             const password = (document.getElementById("loginPassword") as HTMLInputElement).value;
-
+            getLoggedInUser();
             try {
                 await loginUser(email, password);
                 myPage.addEventListener('click', profileSite);
@@ -100,3 +110,4 @@ document.addEventListener('DOMContentLoaded', async () => {
                console.log("Login failed!")
               }
         })
+
