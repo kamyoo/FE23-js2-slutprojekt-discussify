@@ -21,7 +21,7 @@ export function profileSite() {
         pElement.innerText = writeProfilText.value;
     });
 
-    fileInput.addEventListener('change', function(event: Event) {
+   /* fileInput.addEventListener('change', function(event: Event) {
         const file = (event.target as HTMLInputElement).files![0];
         if (file) {
             const reader = new FileReader();
@@ -40,6 +40,6 @@ export function profileSite() {
     changeImgButton.innerText = 'Ändra profilbild';
     changeImgButton.addEventListener('click', () => {
         fileInput.click();
-    });
+    });*/
     proSite.style.display = 'block';
 }
