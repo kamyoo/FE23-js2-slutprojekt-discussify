@@ -22,15 +22,15 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();
 
-async function loginUser(email: string, password: string) {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    console.log("User logged in:", user);
-    // Redirect to dashboard or perform other actions after login
-  } catch (error) {
-    console.error("Login failed:", error);
-  }
-}
+// async function loginUser(email: string, password: string) {
+//   try {
+//     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+//     const user = userCredential.user;
+//     console.log("User logged in:", user);
+//     // Redirect to dashboard or perform other actions after login
+//   } catch (error) {
+//     console.error("Login failed:", error);
+//   }
+// }
 
-export { loginUser }
+// export { loginUser }
