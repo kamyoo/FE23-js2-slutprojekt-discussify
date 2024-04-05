@@ -80,6 +80,7 @@ function hidePopupScreen() {
 
 function showUser() {
   const profilePicContainer = document.getElementById("profilePicContainer") as HTMLDivElement;
+  const foto = document.getElementById('foto') as HTMLDivElement;
   profilePicContainer.style.display = "flex";
 
   profilePicContainer.innerHTML = '';
@@ -94,6 +95,8 @@ function showUser() {
       chosenPic.src = chosenPicElement.src; 
       chosenPic.classList.add('chosen');
       profilePicContainer.appendChild(chosenPic);
+      const chosenPicCopy = chosenPic.cloneNode(true) as HTMLImageElement;
+      foto.appendChild(chosenPicCopy);
     } else {
       console.error('Chosen picture element not found or not an image:', chosenPicId);
     }

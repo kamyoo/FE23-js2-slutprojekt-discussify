@@ -1,11 +1,21 @@
+import { saveProfileText, getProfileText } from './fetchdata';
+
 export function profileSite() {
     const changeProfileTextButton = document.getElementById('changeProfileText') as HTMLElement;
     const pElement = document.getElementById('profilText') as HTMLElement;
     const ptext = document.getElementById('ptext') as HTMLFormElement;
-    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-    const imagePreview = document.getElementById('imagePreview') as HTMLImageElement;
-    const changeImgButton = document.getElementById('changeImg') as HTMLButtonElement;
+    const writeProfilText = document.getElementById('writeProfilText') as HTMLInputElement;
     const proSite = document.getElementById('proSite') as HTMLElement;
+
+    async function loadProfileText() {
+        const userId = 'userId'; // ospecifikt fortfarande
+        const profileText = await getProfileText(userId);
+        if (profileText) {
+            pElement.innerText = profileText;
+        }
+    }
+
+    loadProfileText();
 
     changeProfileTextButton.addEventListener('click', () => {
         ptext.style.display = 'block';
@@ -13,33 +23,19 @@ export function profileSite() {
         pElement.innerText = '';
     });
 
-    ptext.addEventListener('submit', (event: Event) => {
-        const writeProfilText = document.getElementById('writeProfilText') as HTMLInputElement;
+    ptext.addEventListener('submit', async (event: Event) => {
         event.preventDefault();
         ptext.style.display = 'none';
         changeProfileTextButton.style.display = 'block';
-        pElement.innerText = writeProfilText.value;
-    });
 
-    fileInput.addEventListener('change', function(event: Event) {
-        const file = (event.target as HTMLInputElement).files![0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e: ProgressEvent<FileReader>) {
-                if (e.target) {
-                    imagePreview.src = e.target.result as string;
-                }
-            }
-            reader.readAsDataURL(file);
-            fileInput.style.display = 'none';
-        } else {
-            imagePreview.src = "";
-        }
-    });
+        const userId = 'userId'; // ospecifikt fortfarande
+        const newProfileText = writeProfilText.value;
 
-    changeImgButton.innerText = 'Ändra profilbild';
-    changeImgButton.addEventListener('click', () => {
-        fileInput.click();
+       
+        await saveProfileText(userId, newProfileText);
+
+        pElement.innerText = newProfileText;
     });
     proSite.style.display = 'block';
 }
+
