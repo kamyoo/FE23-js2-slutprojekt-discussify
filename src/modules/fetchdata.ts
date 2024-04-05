@@ -35,7 +35,25 @@ async function postComments(com: Com, forumId: string): Promise<void> {
     });
 }
 
-export { Com, getComments, postComments };
+async function deleteComment(commentId: string, forumId: string): Promise<void> {
+  const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
+  const url = `${baseUrl}${forumId}/${commentId}.json`;
+
+  const headers: Headers = new Headers();
+  headers.set('Content-Type', 'application/json');
+
+  const request: RequestInfo = new Request(url, {
+    method: 'DELETE',
+    headers: headers,
+  });
+
+  return fetch(request)
+    .then(res => {
+      console.log("post deleted:", res);
+    });
+}
+
+export { Com, getComments, postComments, deleteComment };
 
 
 

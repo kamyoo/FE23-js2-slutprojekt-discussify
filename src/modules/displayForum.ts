@@ -1,4 +1,4 @@
-import { postComments, Com, getComments } from "./fetchdata";
+import { postComments, Com, getComments, deleteComment } from "./fetchdata";
 
 let createdForm: string | null = null;
 
@@ -86,7 +86,12 @@ function displayComments(comment: Com, container: HTMLElement, forumId: string) 
     messageEl.textContent = comment.message;
 
     const deleteBtn = document.createElement('button');
-    deleteBtn.textContent ='X'
+    deleteBtn.textContent ='X';
+
+    deleteBtn.addEventListener('click', async () =>{
+        await deleteComment(comment.title, forumId);
+        container.removeChild(commentDiv);
+    });
 
     commentDiv.appendChild(titleEl);
     commentDiv.appendChild(messageEl);
