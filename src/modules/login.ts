@@ -184,5 +184,5 @@ function highlightChosenProfilePic() {
   }
 }
 
-  export { Newuser, createUser, loginUser, checkUserName, getLoggedInUser, highlightChosenProfilePic };
+  export { Newuser, createUser, loginUser, checkUserName, getLoggedInUser, highlightChosenProfilePic, showUser };
   

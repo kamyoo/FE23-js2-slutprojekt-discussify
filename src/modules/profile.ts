@@ -37,5 +37,18 @@ export function profileSite() {
         pElement.innerText = newProfileText;
     });
     proSite.style.display = 'block';
+
+    const forum1 = document.getElementById('forum1') as HTMLButtonElement;
+    const forum2 = document.getElementById('forum2') as HTMLButtonElement;
+    const forum3 = document.getElementById('forum3') as HTMLButtonElement;
+
+function profileOff (forum: HTMLButtonElement) {
+    forum.addEventListener('click', ()=>{
+        proSite.style.display = 'none';
+    })
+}
+profileOff(forum1);
+profileOff(forum2);
+profileOff(forum3);
 }
 
