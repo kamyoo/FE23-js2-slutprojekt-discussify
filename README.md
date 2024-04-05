@@ -1,1 +1,5 @@
-# slutprojekt-js2
+# slutprojekt-js2 Discussify
+
+Kamy
+Ann-elie
+Andre
