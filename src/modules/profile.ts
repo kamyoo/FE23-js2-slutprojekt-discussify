@@ -1,4 +1,5 @@
 import { saveProfileText, getProfileText } from './fetchdata';
+import {getLoggedInUser} from "./login.ts"
 
 export function profileSite() {
     const changeProfileTextButton = document.getElementById('changeProfileText') as HTMLElement;
@@ -8,12 +9,21 @@ export function profileSite() {
     const proSite = document.getElementById('proSite') as HTMLElement;
 
     async function loadProfileText() {
-        const userId = 'userId'; // ospecifikt fortfarande
-        const profileText = await getProfileText(userId);
-        if (profileText) {
-            pElement.innerText = profileText;
+        const loggedInUser = getLoggedInUser();
+        if (loggedInUser) {
+            const userId = loggedInUser.userName;
+            const profileText = await getProfileText(userId);
+            if (profileText !== null) {
+                pElement.innerText = profileText;
+            } else {
+                pElement.innerText = "No profile text available";
+            }
+        } else {
+            console.error('No logged in user found.');
         }
     }
+    
+    
 
     loadProfileText();
 
@@ -28,11 +38,10 @@ export function profileSite() {
         ptext.style.display = 'none';
         changeProfileTextButton.style.display = 'block';
 
-        const userId = 'userId'; // ospecifikt fortfarande
         const newProfileText = writeProfilText.value;
 
        
-        await saveProfileText(userId, newProfileText);
+        await saveProfileText(newProfileText);
 
         pElement.innerText = newProfileText;
     });

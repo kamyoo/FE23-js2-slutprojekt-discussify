@@ -2,6 +2,7 @@ import { postComments, Com, getComments, deleteComment } from "./fetchdata";
 import { getLoggedInUser } from "./login";
 
 let createdForm: string | null = null;
+let loggedInUser = getLoggedInUser(); // Hämta den inloggade användaren här
 
 export async function displayForm(forumId: string) {
     const forumContainer = document.getElementById(`${forumId}Container`);
@@ -39,8 +40,10 @@ export async function displayForm(forumId: string) {
         const messageInput = form.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
         const title = titleInput.value;
         const message = messageInput.value;
+        const userName = loggedInUser ? loggedInUser.userName : 'Guest';
 
         const newComment: Com = {
+            userName: userName,
             title: title,
             message: message
         };
@@ -80,8 +83,7 @@ function displayComments(comment: Com, container: HTMLElement, forumId: string) 
     const commentDiv = document.createElement('div');
     commentDiv.classList.add('comment-wrapper', `forum-${forumId}-comments`);
 
-    const loggedInUser = getLoggedInUser();
-    if(loggedInUser){
+    if(loggedInUser){ // Kontrollera om användaren är inloggad
         const usernameEl = document.createElement('h2');
         usernameEl.textContent = loggedInUser.userName;
 

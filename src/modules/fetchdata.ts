@@ -1,20 +1,16 @@
+import {getLoggedInUser} from "./login.ts"
+
 type Com = {
-  title: string,
+  userName: string;
+  title: string;
   message: string;
 }
 
-async function getComments(forumId: string): Promise<Com[]>{
-  const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
-  const url = `${baseUrl}${forumId}.json`;
+async function postComments(comment: Com, forumId: string): Promise<void> {
+  const userName = getUserName(); // Hämta användar-ID för den aktuella användaren
+  comment.userName = userName;
 
-  const res = await fetch(url);
-  const data = await res.json();
-  
-  const comments = Object.keys(data).map(key => data[key]) as Com[];
-  return comments;
-}
-
-async function postComments(com: Com, forumId: string): Promise<void> {
+  // Posta kommentaren till databasen
   const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
   const url = `${baseUrl}${forumId}.json`;
 
@@ -25,14 +21,40 @@ async function postComments(com: Com, forumId: string): Promise<void> {
   const request: RequestInfo = new Request(url, {
     method: 'POST',
     headers: headers,
-    body: JSON.stringify(com)
+    body: JSON.stringify(comment)
   });
 
   return fetch(request)
     .then(res => {
-      console.log("got response:", res);
+      console.log("Comment posted!", res);
     });
 }
+
+async function getComments(forumId: string): Promise<Com[]> {
+  const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
+  const url = `${baseUrl}${forumId}.json`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const comments: Com[] = Object.keys(data).map(key => {
+    const comment = data[key];
+    return { ...comment, userName: comment.userName };
+  });
+
+  return comments;
+}
+
+// Funktion för att hämta användar-ID för den aktuella användaren
+function getUserName(): string {
+  const loggedInUser = getLoggedInUser();
+  if (loggedInUser) {
+    return loggedInUser.userName;
+  } else {
+    return 'defaultUserName';
+  }
+}
+
 
 async function deleteComment(commentId: string, forumId: string): Promise<void> {
   const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
@@ -52,7 +74,15 @@ async function deleteComment(commentId: string, forumId: string): Promise<void> 
     });
 }
 
-export async function saveProfileText(userId: string, profileText: string): Promise<void> {
+export async function saveProfileText(profileText: string): Promise<void> {
+  const loggedInUser = getLoggedInUser();
+  if (!loggedInUser) {
+    console.error('No logged in user found.');
+    return;
+  }
+
+  const userId = loggedInUser.userName; // Användar-ID för den inloggade användaren
+
   const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
   const url = `${baseUrl}users/${userId}/profileText.json`;
 
@@ -72,9 +102,10 @@ export async function saveProfileText(userId: string, profileText: string): Prom
     });
 }
 
-export async function getProfileText(userId: string): Promise<string | null> {
+
+export async function getProfileText(userName: string): Promise<string | null> {
   const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
-  const url = `${baseUrl}users/${userId}/profileText.json`;
+  const url = `${baseUrl}users/${userName}/profileText.json`;
 
   try {
     const response = await fetch(url);
