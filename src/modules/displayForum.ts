@@ -85,19 +85,8 @@ function displayComments(comment: Com, container: HTMLElement, forumId: string) 
     const commentDiv = document.createElement('div');
     commentDiv.classList.add('comment-wrapper', `forum-${forumId}-comments`);
 
-    if(loggedInUser){ // Kontrollera om användaren är inloggad
-        const usernameEl = document.createElement('h2');
-        usernameEl.textContent = loggedInUser.userName;
-
-        const profilePicEl = document.createElement('img');
-        const profilePicSrc = localStorage.getItem('chosenProfilePic');
-        if(profilePicSrc){
-            profilePicEl.src = profilePicSrc;
-        }
-
-        commentDiv.appendChild(usernameEl);
-        commentDiv.appendChild(profilePicEl);
-    }
+    const usernameEl = document.createElement('h2');
+    usernameEl.textContent = comment.userName;
 
     const titleEl = document.createElement('h2');
     titleEl.textContent = comment.title;
@@ -107,12 +96,12 @@ function displayComments(comment: Com, container: HTMLElement, forumId: string) 
 
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent ='X';
-
     deleteBtn.addEventListener('click', async () =>{
         await deleteComment(comment.title, forumId);
         container.removeChild(commentDiv);
     });
 
+    commentDiv.appendChild(usernameEl);
     commentDiv.appendChild(titleEl);
     commentDiv.appendChild(messageEl);
     commentDiv.appendChild(deleteBtn);
