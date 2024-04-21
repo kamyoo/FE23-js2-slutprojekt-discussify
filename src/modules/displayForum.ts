@@ -108,6 +108,21 @@ function displayComments(comment: Com, container: HTMLElement, forumId: string) 
     container.prepend(commentDiv);
 }
 
+export function getCommentsByUserId(userId: string): Promise<Com[]> {
+    const forumIds = ["forum1", "forum2", "forum3"];
+    const promises = forumIds.map(forumId => getComments(forumId));
+    
+    return Promise.all(promises)
+      .then(forumComments => {
+        const allComments = forumComments.flat(); //Sammanfogar forumen
+        const commentsByUser = allComments.filter(comment => comment.userId === userId);
+        return commentsByUser;
+      })
+      .catch(error => {
+        console.error('Error fetching comments by user ID:', error);
+        return [];
+      });
+}
 
 //för att tömma forum vid profilsida
 function clearAllForums() {
