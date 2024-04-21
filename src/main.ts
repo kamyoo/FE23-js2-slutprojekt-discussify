@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const loginWrap = (document.querySelector("#createUserPopup") as HTMLDivElement);
         const loginPopup = (document.getElementById("loginPopup") as HTMLDivElement);
 
-        createUser({ userName: `${newName}`, userEmail: `${newEmail}`, userPassword: `${newPassword}` })
+        createUser({ userName: `${newName}`, userEmail: `${newEmail}`, userPassword: `${newPassword}`, id: ``})
 
         .then(() => {
         console.log("User created!")
