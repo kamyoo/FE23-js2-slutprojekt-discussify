@@ -21,50 +21,59 @@ const app = initializeApp(firebaseConfig);
 type Newuser = {
     userName: string,
     userEmail: string,
-    userPassword: string
+    userPassword: string,
+    id: string
   }
   
 
   async function loginUser(userEmail: string, userPassword: string): Promise<void> {
     const usersUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/users.json';
-    
+  
     try {
       const response = await fetch(usersUrl);
-      const usersData: { [userId: string]: Newuser } = await response.json();
-
-      let loggedIn = false;
-
+      const usersData: { [userId: string]: Newuser & { id: string } } = await response.json();
+  
+      let loggedInUser: Newuser | null = null;
+  
       for (const userId in usersData) {
-          const user = usersData[userId];
-          if (user.userEmail === userEmail && user.userPassword === userPassword) {
-              console.log('User logged in successfully');
-              loggedIn = true;
-              hidePopupScreen();
-              showUser();
-              profileSite();
-
-              localStorage.setItem('loggedInUser', JSON.stringify(user));
-
-              return;
-          }
+        const user = usersData[userId];
+        if (user.userEmail === userEmail && user.userPassword === userPassword) {
+          console.log('User logged in successfully');
+          loggedInUser = { ...user, id: userId }; // Adding Firebase ID to loggedInUser
+          hidePopupScreen();
+          showUser();
+          profileSite();
+  
+          localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+  
+          return;
+        }
       }
-      if (!loggedIn) {
+  
       console.log('Invalid email or password');
-      }
-  } catch (error) {
+    } catch (error) {
       console.error('Error fetching users data:', error);
+    }
   }
-}
+  
 
 // Function to retrieve logged-in user's data from localStorage
 function getLoggedInUser(): Newuser | null {
   const userJson = localStorage.getItem('loggedInUser');
   if (userJson) {
-    return JSON.parse(userJson);
+    const loggedInUser = JSON.parse(userJson);
+    // Om id finns i loggedInUser, returnera hela objektet
+    if ('id' in loggedInUser) {
+      return loggedInUser;
+    } else {
+      // Om det inte finns, returnera null
+      return null;
+    }
   } else {
     return null;
   }
 }
+
 
 function hidePopupScreen() {
   const signinupBtn = (document.getElementById("signInBtn") as HTMLButtonElement);

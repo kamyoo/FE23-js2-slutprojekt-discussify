@@ -1,14 +1,21 @@
 import {getLoggedInUser} from "./login.ts"
 
 type Com = {
+  userId: string,
   userName: string;
   title: string;
   message: string;
 }
 
 async function postComments(comment: Com, forumId: string): Promise<void> {
-  const userName = getUserName(); // Hämta användar-ID för den aktuella användaren
-  comment.userName = userName;
+  const loggedInUser = getLoggedInUser();
+  if (!loggedInUser) {
+    console.error('No logged in user found.');
+    return;
+  }
+
+  const userId = loggedInUser.id; // Användar-ID för den inloggade användaren
+  comment.userId = userId; // Tilldela användarens Firebase ID till kommentaren
 
   // Posta kommentaren till databasen
   const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
@@ -30,6 +37,7 @@ async function postComments(comment: Com, forumId: string): Promise<void> {
     });
 }
 
+
 async function getComments(forumId: string): Promise<Com[]> {
   const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
   const url = `${baseUrl}${forumId}.json`;
@@ -43,16 +51,6 @@ async function getComments(forumId: string): Promise<Com[]> {
   });
 
   return comments;
-}
-
-// Funktion för att hämta användar-ID för den aktuella användaren
-function getUserName(): string {
-  const loggedInUser = getLoggedInUser();
-  if (loggedInUser) {
-    return loggedInUser.userName;
-  } else {
-    return 'defaultUserName';
-  }
 }
 
 

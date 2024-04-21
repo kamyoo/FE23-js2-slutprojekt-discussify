@@ -41,8 +41,10 @@ export async function displayForm(forumId: string) {
         const title = titleInput.value;
         const message = messageInput.value;
         const userName = loggedInUser ? loggedInUser.userName : 'Guest';
+        const userId = loggedInUser ? loggedInUser.id: '';
 
         const newComment: Com = {
+            userId: userId,
             userName: userName,
             title: title,
             message: message
