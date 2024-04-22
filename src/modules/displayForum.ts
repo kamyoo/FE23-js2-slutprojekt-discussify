@@ -1,4 +1,4 @@
-import { postComments, Com, getComments, deleteComment } from "./fetchdata";
+import { postComments, Com, getComments, deleteComment, getAllUsernames } from "./fetchdata";
 import { getLoggedInUser } from "./login";
 
 let createdForm: string | null = null;
@@ -138,8 +138,55 @@ const myPage = document.getElementById('myPage') as HTMLButtonElement;
 
 myPage.addEventListener('click', () => {
     const forumForm = document.querySelector('.forum-form') as HTMLElement;
+    const memberSite = document.getElementById('memberSite') as HTMLElement;
+
     if (forumForm) {
         forumForm.style.display = 'none';
         clearAllForums();
     }
+    if (memberSite) {
+        memberSite.style.display = 'none';
+    }
 });
+
+async function displayUsernames() {
+    const usernamesContainer = document.getElementById('usernamesContainer');
+    const memberSite = document.getElementById('memberSite') as HTMLElement;
+    memberSite.style.display = 'block';
+    clearAllForums();
+
+    const forumForm = document.querySelector('.forum-form') as HTMLElement;
+    if (forumForm) {
+        forumForm.style.display = 'none';
+    }
+
+    if (!usernamesContainer) return;
+  
+    const usernames = await getAllUsernames();
+  
+    usernames.forEach(username => {
+        const usernameElement = document.createElement('div');
+        usernameElement.textContent = username;
+        usernamesContainer.appendChild(usernameElement);
+    });
+} 
+
+  
+  const memberSiteBtn = document.getElementById('members') as HTMLButtonElement;
+
+  memberSiteBtn.addEventListener('click', displayUsernames);
+
+  const forum1 = document.getElementById('forum1') as HTMLButtonElement;
+  const forum2 = document.getElementById('forum2') as HTMLButtonElement;
+  const forum3 = document.getElementById('forum3') as HTMLButtonElement;
+
+  function memberListOff (forum: HTMLButtonElement) {
+    forum.addEventListener('click', ()=>{
+        const memberSite = document.getElementById('memberSite') as HTMLElement;
+        memberSite.style.display = 'none';
+    })
+}
+
+memberListOff(forum1);
+memberListOff(forum2);
+memberListOff(forum3);

@@ -83,6 +83,7 @@ export function profileSite() {
     const forum1 = document.getElementById('forum1') as HTMLButtonElement;
     const forum2 = document.getElementById('forum2') as HTMLButtonElement;
     const forum3 = document.getElementById('forum3') as HTMLButtonElement;
+    const members = document.getElementById('members') as HTMLButtonElement;
 
 function profileOff (forum: HTMLButtonElement) {
     forum.addEventListener('click', ()=>{
@@ -92,5 +93,6 @@ function profileOff (forum: HTMLButtonElement) {
 profileOff(forum1);
 profileOff(forum2);
 profileOff(forum3);
+profileOff(members);
 }
 

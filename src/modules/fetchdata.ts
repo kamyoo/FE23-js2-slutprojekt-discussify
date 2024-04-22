@@ -1,4 +1,4 @@
-import {getLoggedInUser} from "./login.ts"
+import {getLoggedInUser, Newuser} from "./login.ts"
 
 type Com = {
   userId: string,
@@ -121,7 +121,25 @@ export async function getProfileText(userId: string): Promise<string | null> {
   }
 }
 
+async function getAllUsernames(): Promise<string[]> {
+  const usersUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/users.json';
+  const usernames: string[] = [];
+  
+  try {
+    const response = await fetch(usersUrl);
+    const usersData: { [userId: string]: Newuser } = await response.json();
+
+    for (const userId in usersData) {
+      const user = usersData[userId];
+      usernames.push(user.userName);
+    }
+
+    return usernames;
+  } catch (error) {
+    console.error('Error fetching users data:', error);
+    return [];
+  }
+}
 
 
-
-export { Com, getComments, postComments, deleteComment };
+export { Com, getComments, postComments, deleteComment, getAllUsernames };
