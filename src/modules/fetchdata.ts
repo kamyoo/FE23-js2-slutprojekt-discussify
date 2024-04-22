@@ -101,20 +101,27 @@ export async function saveProfileText(profileText: string): Promise<void> {
 }
 
 
-export async function getProfileText(userName: string): Promise<string | null> {
+
+export async function getProfileText(userId: string): Promise<string | null> {
   const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
-  const url = `${baseUrl}users/${userName}/profileText.json`;
+  const url = `${baseUrl}users/${userId}/profileText.json`;
 
   try {
     const response = await fetch(url);
     const data = await response.json();
 
-    return data.profileText;
+    if (data !== null && 'profileText' in data) {
+      return data.profileText;
+    } else {
+      return null;
+    }
   } catch (error) {
     console.error('Error fetching profile text:', error);
     return null;
   }
 }
+
+
 
 
 export { Com, getComments, postComments, deleteComment };

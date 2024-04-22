@@ -23,7 +23,8 @@ export function profileSite() {
         } else {
             console.error('No logged in user found.');
         }
-    }
+      }
+      
     
     async function loadPostHistory() {
         const loggedInUser = getLoggedInUser();
