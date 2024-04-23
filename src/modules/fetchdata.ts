@@ -5,7 +5,51 @@ type Com = {
   userName: string;
   title: string;
   message: string;
+  commentId: string;
 }
+
+// async function postComments(comment: Com, forumId: string): Promise<string | null> {
+//   const loggedInUser = getLoggedInUser();
+//   if (!loggedInUser) {
+//       console.error('No logged in user found.');
+//       return null;
+//   }
+
+//   // Användar-ID för den inloggade användaren
+//   const userId = loggedInUser.id;
+//   comment.userId = userId;
+
+//   // Posta kommentaren till databasen
+//   const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
+//   const url = `${baseUrl}${forumId}.json`;
+
+//   const headers: Headers = new Headers();
+//   headers.set('Content-Type', 'application/json');
+//   headers.set('Accept', 'application/json');
+
+//   const request: RequestInfo = new Request(url, {
+//       method: 'POST',
+//       headers: headers,
+//       body: JSON.stringify(comment)
+//   });
+
+//   try {
+//       const response = await fetch(request);
+//       if (response.ok) {
+//           const data = await response.json();
+//           const commentId = data.name; // Det unika ID:t som Firebase tilldelar inlägget
+//           // console.log('comment posted', commentId);
+//           console.log("Comment posted!", response);
+//           return commentId;
+//       } else {
+//           console.error('Failed to post comment:', response.statusText);
+//           return null;
+//       }
+//   } catch (error) {
+//       console.error('Error posting comment:', error);
+//       return null;
+//   }
+// }
 
 async function postComments(comment: Com, forumId: string): Promise<void> {
   const loggedInUser = getLoggedInUser();
@@ -52,6 +96,30 @@ async function getComments(forumId: string): Promise<Com[]> {
 
   return comments;
 }
+
+// async function deleteComment(commentId: string, forumId: string): Promise<void> {
+//   const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';
+//   const url = `${baseUrl}${forumId}/${commentId}.json`;
+
+//   const headers: Headers = new Headers();
+//   headers.set('Content-Type', 'application/json');
+
+//   const request: RequestInfo = new Request(url, {
+//       method: 'DELETE',
+//       headers: headers,
+//   });
+
+//   try {
+//       const response = await fetch(request);
+//       if (response.ok) {
+//           console.log(`Comment with ID ${commentId} deleted successfully.`);
+//       } else {
+//           console.error(`Failed to delete comment with ID ${commentId}.`);
+//       }
+//   } catch (error) {
+//       console.error('Error deleting comment:', error);
+//   }
+// }
 
 
 async function deleteComment(commentId: string, forumId: string): Promise<void> {
