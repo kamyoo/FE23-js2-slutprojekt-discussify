@@ -49,7 +49,7 @@ type Newuser = {
           return;
         }
       }
-  
+      alert('Invalid email or password');
       console.log('Invalid email or password');
     } catch (error) {
       console.error('Error fetching users data:', error);

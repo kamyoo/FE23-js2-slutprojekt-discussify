@@ -1,4 +1,4 @@
-import { saveProfileText, getProfileText } from './fetchdata';
+import { saveProfileText, getProfileText, deleteUser } from './fetchdata';
 import {getLoggedInUser} from "./login.ts";
 import {getCommentsByUserId} from "./displayForum.ts";
 
@@ -9,6 +9,19 @@ export function profileSite() {
     const writeProfilText = document.getElementById('writeProfilText') as HTMLInputElement;
     const proSite = document.getElementById('proSite') as HTMLElement;
     const postsContainer = document.getElementById('postsContainer') as HTMLElement;
+    const deleteProfile = document.getElementById('deleteProfile') as HTMLButtonElement;
+
+
+    const loggedInUser = getLoggedInUser();
+    if (loggedInUser) {
+        const userDel = loggedInUser.id;
+        deleteProfile.addEventListener('click', () => {
+        deleteUser(userDel);
+        alert('Profile deleted!')
+        });
+    } else {
+        console.error('Deletion failed');
+    }
 
     async function loadProfileText() {
         const loggedInUser = getLoggedInUser();

@@ -141,5 +141,28 @@ async function getAllUsernames(): Promise<string[]> {
   }
 }
 
+async function deleteUser(userId: string): Promise<void> {
+  const deleteUserUrl = `https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}.json`;
 
-export { Com, getComments, postComments, deleteComment, getAllUsernames };
+  const headers: Headers = new Headers();
+  headers.set('Content-Type', 'application/json');
+  headers.set('Accept', 'application/json');
+
+  const request: RequestInfo = new Request(deleteUserUrl, {
+    method: 'DELETE',
+    headers: headers,
+  });
+
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      console.log(`User with ID ${userId} deleted successfully.`);
+    } else {
+      console.error(`Failed to delete user with ID ${userId}.`);
+    }
+  } catch (error) {
+    console.error('Error deleting user:', error);
+  }
+}
+
+export { Com, getComments, postComments, deleteComment, getAllUsernames, deleteUser };
