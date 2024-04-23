@@ -1,5 +1,8 @@
 import { postComments, Com, getComments, deleteComment, getAllUsernames } from "./fetchdata";
 import { getLoggedInUser } from "./login";
+import redProfilePic from "../img/red.jpg";
+import punkProfilePic from '../img/punk.jpg';
+import hatProfilePic from '../img/hat.jpg';
 
 let createdForm: string | null = null;
 let loggedInUser = getLoggedInUser(); // Hämta den inloggade användaren här
@@ -85,8 +88,30 @@ function displayComments(comment: Com, container: HTMLElement, forumId: string) 
     const commentDiv = document.createElement('div');
     commentDiv.classList.add('comment-wrapper', `forum-${forumId}-comments`);
 
-    const usernameEl = document.createElement('h2');
+    const commentContent = document.createElement('div');
+    commentContent.classList.add('comment-content');
+
+    const usernameEl = document.createElement('h1');
     usernameEl.textContent = comment.userName;
+
+    const loggedInUser = getLoggedInUser();
+    if (loggedInUser) {
+  
+      const profilePicEl = document.createElement("img");
+      const profilePic = localStorage.getItem("chosenProfilePic");
+      if (profilePic) {
+        if (profilePic == "profilePicRed") {
+          profilePicEl.src = redProfilePic;
+        } else if(profilePic == 'profilePicHat'){
+          profilePicEl.src = hatProfilePic;
+        } else if(profilePic == 'profilePicPunk'){
+          profilePicEl.src = punkProfilePic;
+        }
+        profilePicEl.classList.add("forumImg");
+        console.log(localStorage.getItem("chosenProfilePic"));
+      }
+      commentContent.appendChild(profilePicEl);
+    }
 
     const titleEl = document.createElement('h2');
     titleEl.textContent = comment.title;
@@ -94,17 +119,27 @@ function displayComments(comment: Com, container: HTMLElement, forumId: string) 
     const messageEl = document.createElement('p');
     messageEl.textContent = comment.message;
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent ='X';
-    deleteBtn.addEventListener('click', async () =>{
-        await deleteComment(comment.title, forumId);
-        container.removeChild(commentDiv);
-    });
+    if (comment.userId === loggedInUser?.id) {
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent ='X';
+        deleteBtn.addEventListener('click', async () =>{
+            await deleteComment(comment.title, forumId);
+            container.removeChild(commentDiv);
 
-    commentDiv.appendChild(usernameEl);
+
+    // const deleteBtn = document.createElement('button');
+    // deleteBtn.textContent ='X';
+    // deleteBtn.addEventListener('click', async () =>{
+    //     await deleteComment(comment.title, forumId);
+    //     container.removeChild(commentDiv);
+    });
+    commentDiv.appendChild(deleteBtn);
+}
+
+    commentContent.appendChild(usernameEl);
+    commentDiv.appendChild(commentContent);
     commentDiv.appendChild(titleEl);
     commentDiv.appendChild(messageEl);
-    commentDiv.appendChild(deleteBtn);
     container.prepend(commentDiv);
 }
 

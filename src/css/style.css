@@ -88,29 +88,57 @@ h1{
     padding: 2px;
 }
 
+.comment-wrapper h1{
+    font-size: 22px;
+    margin-left: 0;
+    margin-top: 0;
+    padding: 0;
+}
+.comment-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.forum-forum1-comments .comment-content {
+    background-color: #DBCDF0;
+}
+
+.forum-forum2-comments .comment-content {
+    background-color: #F2C6DE;
+}
+
+.forum-forum3-comments .comment-content {
+    background-color: #C9E4DE;
+}
+
 .comment-wrapper h2 {
     margin-top: 0;
     font-size: 18px;
 }
-
 .comment-wrapper p {
     font-size: 16px;
 }
+.comment-wrapper img{
+    width: 50px;
+    margin-right: 10px;
+}
 .forum-forum1-comments,
+.forum-forum1-comments h1,
 .forum-forum1-comments h2,
 .forum-forum1-comments p{
     background-color: #DBCDF0;
 }
 
 .forum-forum2-comments,
+.forum-forum2-comments h1,
 .forum-forum2-comments h2,
 .forum-forum2-comments p {
     background-color: #F2C6DE;
 }
 
 .forum-forum3-comments,
+.forum-forum3-comments h1,
 .forum-forum3-comments h2,
 .forum-forum3-comments p {
     background-color: #C9E4DE;
 }
-
