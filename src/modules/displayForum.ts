@@ -3,6 +3,7 @@ import { getLoggedInUser } from "./login";
 import redProfilePic from "../img/red.jpg";
 import punkProfilePic from '../img/punk.jpg';
 import hatProfilePic from '../img/hat.jpg';
+import { profileSite } from "./profile";
 
 let createdForm: string | null = null;
 let loggedInUser = getLoggedInUser(); // Hämta den inloggade användaren här
@@ -183,12 +184,22 @@ function clearAllForums() {
     });
 }
 
+const postsContainer = document.getElementById('postsContainer') as HTMLElement;
+const otherProfilePostContainer = document.getElementById('otherProfilePostContainer') as HTMLElement;
+const changeProfileText = document.getElementById('changeProfileText') as HTMLButtonElement;
+const deleteProfile = document.getElementById('deleteProfile') as HTMLButtonElement;
+
 const myPage = document.getElementById('myPage') as HTMLButtonElement;
 
 myPage.addEventListener('click', () => {
     const forumForm = document.querySelector('.forum-form') as HTMLElement;
     const memberSite = document.getElementById('memberSite') as HTMLElement;
 
+    postsContainer.style.display = 'block';
+    changeProfileText.style.display = 'block';
+    deleteProfile.style.display = 'block';
+    otherProfilePostContainer.style.display = 'none';
+    
     if (forumForm) {
         forumForm.style.display = 'none';
         clearAllForums();
@@ -221,11 +232,41 @@ async function displayUsernames() {
             const commentsPromises = forumIds.map(forumId => getCommentsByUsername(username, forumId));
             const commentsArray = await Promise.all(commentsPromises);
             const allComments = commentsArray.flat();
-            console.log(`Comments by ${username} from all forums:`, allComments);
+
+            otherProfilePostContainer.innerHTML = '';
+
+            allComments.forEach(comment => {
+                const commentDiv = document.createElement('div');
+                commentDiv.classList.add('comment-wrapper');
+                
+                const usernameEl = document.createElement('h3');
+                usernameEl.textContent = comment.userName;
+                
+                const titleEl = document.createElement('h4');
+                titleEl.textContent = comment.title;
+                
+                const messageEl = document.createElement('p');
+                messageEl.textContent = comment.message;
+                
+                commentDiv.appendChild(usernameEl);
+                commentDiv.appendChild(titleEl);
+                commentDiv.appendChild(messageEl);
+                
+                otherProfilePostContainer.appendChild(commentDiv);
+            });
+
+
+            postsContainer.style.display = 'none';
+            changeProfileText.style.display = 'none';
+            deleteProfile.style.display = 'none';
+            otherProfilePostContainer.style.display = 'block';
+
+            profileSite();
         });
         usernamesContainer.appendChild(usernameElement);
     });
 }
+
 
 
 

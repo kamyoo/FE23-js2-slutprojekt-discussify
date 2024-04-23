@@ -55,20 +55,25 @@ export function profileSite() {
         
         postHistory.forEach(post => {
             const postDiv = document.createElement('div');
-            postDiv.classList.add('post');
-
+            postDiv.classList.add('comment-wrapper');
+            
+            const usernameEl = document.createElement('h3');
+            usernameEl.textContent = post.userName;
+            
             const titleEl = document.createElement('h2');
             titleEl.textContent = post.title;
-
+            
             const messageEl = document.createElement('p');
             messageEl.textContent = post.message;
-
+            
+            postDiv.appendChild(usernameEl);
             postDiv.appendChild(titleEl);
             postDiv.appendChild(messageEl);
-
+            
             postsContainer.appendChild(postDiv);
         });
     }
+    
     
     loadProfileText();
     loadPostHistory();
@@ -108,4 +113,6 @@ profileOff(forum2);
 profileOff(forum3);
 profileOff(members);
 }
+
+
 
