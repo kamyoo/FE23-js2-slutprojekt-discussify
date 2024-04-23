@@ -58,14 +58,9 @@ export async function displayForm(forumId: string) {
         const commentId = await postComments(newComment,forumId);
         if(commentId !== null){
             newComment.commentId = commentId;
-            // console.log('comment Id', commentId);
-            
         }else {
             console.error('error while creating comment.comment id is null')
         }
-        
-
-        // await postComments(newComment, forumId);
 
         titleInput.value = '';
         messageInput.value = '';

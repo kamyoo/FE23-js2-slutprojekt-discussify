@@ -37,8 +37,7 @@ async function postComments(comment: Com, forumId: string): Promise<string | nul
       const response = await fetch(request);
       if (response.ok) {
           const data = await response.json();
-          const commentId = data.name; // Det unika ID:t som Firebase tilldelar inlägget
-          // console.log('comment posted', commentId);
+          const commentId = data.name; 
           console.log("Comment posted!", response);
           return commentId;
       } else {
