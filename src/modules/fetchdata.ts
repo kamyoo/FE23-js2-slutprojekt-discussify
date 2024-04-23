@@ -89,6 +89,11 @@ async function getComments(forumId: string): Promise<Com[]> {
   const res = await fetch(url);
   const data = await res.json();
 
+  if (!data) {
+    console.error(`No comments found for forum ${forumId}.`);
+    return [];
+  }
+
   const comments: Com[] = Object.keys(data).map(key => {
     const comment = data[key];
     return { ...comment, userName: comment.userName };
@@ -96,6 +101,7 @@ async function getComments(forumId: string): Promise<Com[]> {
 
   return comments;
 }
+
 
 // async function deleteComment(commentId: string, forumId: string): Promise<void> {
 //   const baseUrl = 'https://slutprojekt-js2-2b1f0-default-rtdb.europe-west1.firebasedatabase.app/';

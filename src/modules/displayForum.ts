@@ -148,7 +148,7 @@ function displayComments(comment: Com, container: HTMLElement, forumId: string) 
     container.prepend(commentDiv);
 }
 
-export function getCommentsByUserId(userId: string): Promise<Com[]> {
+export async function getCommentsByUserId(userId: string): Promise<Com[]> {
     const forumIds = ["forum1", "forum2", "forum3"];
     const promises = forumIds.map(forumId => getComments(forumId));
     
@@ -163,6 +163,15 @@ export function getCommentsByUserId(userId: string): Promise<Com[]> {
         return [];
       });
 }
+
+async function getCommentsByUsername(username: string, forumId: string): Promise<Com[]> {
+    const allComments = await getComments(forumId);
+  
+    const userComments = allComments.filter(comment => comment.userName === username);
+  
+    return userComments;
+  }
+
 
 //för att tömma forum vid profilsida
 function clearAllForums() {
@@ -204,12 +213,21 @@ async function displayUsernames() {
   
     const usernames = await getAllUsernames();
   
-    usernames.forEach(username => {
+    usernames.forEach(async username => {
         const usernameElement = document.createElement('div');
         usernameElement.textContent = username;
+        usernameElement.addEventListener('click', async () => {
+            const forumIds = ['forum1', 'forum2', 'forum3'];
+            const commentsPromises = forumIds.map(forumId => getCommentsByUsername(username, forumId));
+            const commentsArray = await Promise.all(commentsPromises);
+            const allComments = commentsArray.flat();
+            console.log(`Comments by ${username} from all forums:`, allComments);
+        });
         usernamesContainer.appendChild(usernameElement);
     });
-} 
+}
+
+
 
   
   const memberSiteBtn = document.getElementById('members') as HTMLButtonElement;
